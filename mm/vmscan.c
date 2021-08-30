@@ -193,7 +193,23 @@ int kswapd_threads_current = DEF_KSWAPD_THREADS_PER_NODE;
 /*
  * From 0 .. 100.  Higher means more swappy.
  */
-int vm_swappiness = 30;
+int vm_swappiness = 60;
+#ifdef CONFIG_DYNAMIC_TUNNING_SWAPPINESS
+int vm_swappiness_threshold1 = 0;
+int vm_swappiness_threshold2 = 0;
+int swappiness_threshold1_size = 0;
+int swappiness_threshold2_size = 0;
+#endif
+#if defined(OPLUS_FEATURE_ZRAM_OPT) && defined(CONFIG_OPLUS_ZRAM_OPT)
+/*
+ * Direct reclaim swappiness, exptct 0 - 60. Higher means more swappy and slower.
+ */
+int direct_vm_swappiness = 60;
+#endif /*OPLUS_FEATURE_ZRAM_OPT*/
+#ifdef CONFIG_HYBRIDSWAP_SWAPD
+static int hybridswapd_swappiness = 200;
+#endif
+
 /*
  * The total number of pages which are beyond the high watermark within all
  * zones.
