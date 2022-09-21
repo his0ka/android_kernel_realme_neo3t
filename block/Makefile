@@ -20,6 +20,10 @@ obj-$(CONFIG_BLK_DEV_THROTTLING)	+= blk-throttle.o
 obj-$(CONFIG_BLK_CGROUP_IOLATENCY)	+= blk-iolatency.o
 obj-$(CONFIG_IOSCHED_NOOP)	+= noop-iosched.o
 obj-$(CONFIG_IOSCHED_DEADLINE)	+= deadline-iosched.o
+obj-$(CONFIG_IOSCHED_MAPLE)	+= maple-iosched.o
+obj-$(CONFIG_IOSCHED_FIOPS)	+= fiops-iosched.o
+obj-$(CONFIG_IOSCHED_SIO)	+= sio-iosched.o
+obj-$(CONFIG_IOSCHED_ZEN)	+= zen-iosched.o
 obj-$(CONFIG_IOSCHED_CFQ)	+= cfq-iosched.o
 obj-$(CONFIG_MQ_IOSCHED_DEADLINE)	+= mq-deadline.o
 obj-$(CONFIG_MQ_IOSCHED_KYBER)	+= kyber-iosched.o
@@ -40,6 +44,3 @@ obj-$(CONFIG_BLK_SED_OPAL)	+= sed-opal.o
 obj-$(CONFIG_BLK_INLINE_ENCRYPTION)	+= keyslot-manager.o bio-crypt-ctx.o \
 					   blk-crypto.o
 obj-$(CONFIG_BLK_INLINE_ENCRYPTION_FALLBACK)	+= blk-crypto-fallback.o
-#ifdef OPLUS_FEATURE_SCHED_ASSIST
-obj-$(CONFIG_OPLUS_FEATURE_UXIO_FIRST)	+= uxio_first/
-#endif /*OPLUS_FEATURE_SCHED_ASSIST*/
