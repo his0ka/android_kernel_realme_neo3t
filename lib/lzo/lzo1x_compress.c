@@ -148,6 +148,7 @@ next:
 				} while (--t > 0);
 			}
 		}
+
 		if (unlikely(run_length)) {
 			ip += run_length;
 			run_length -= MIN_ZERO_RUN_LENGTH;
@@ -291,7 +292,7 @@ m_len_done:
 			*op++ = (m_off >> 6);
 		}
 		*state_offset = -2;
-		finished_writing_instruction:
+finished_writing_instruction:
 		ii = ip;
 		goto next;
 	}
@@ -299,7 +300,7 @@ m_len_done:
 	return in_end - (ii - ti);
 }
 
-int lzo1x_1_compress(const unsigned char *in, size_t in_len,
+int lzogeneric1x_1_compress(const unsigned char *in, size_t in_len,
 		     unsigned char *out, size_t *out_len,
 		     void *wrkmem, const unsigned char bitstream_version)
 {
@@ -322,6 +323,7 @@ int lzo1x_1_compress(const unsigned char *in, size_t in_len,
 	}
 
 	data_start = op;
+
 	while (l > 20) {
 		size_t ll = l <= (m4_max_offset + 1) ? l : (m4_max_offset + 1);
 		uintptr_t ll_end = (uintptr_t) ip + ll;
