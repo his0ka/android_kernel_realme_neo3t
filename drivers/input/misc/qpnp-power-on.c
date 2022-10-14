@@ -762,7 +762,7 @@ out:
 	if (!!pon_ship_mode_en) {
 		batt_psy = power_supply_get_by_name("battery");
 		if (batt_psy) {
-			pr_debug("Setting ship mode\n");
+			pr_err("Setting ship mode\n");
 			val.intval = 1;
 			rc = power_supply_set_property(batt_psy,
 					POWER_SUPPLY_PROP_SET_SHIP_MODE, &val);
@@ -1002,7 +1002,7 @@ static int qpnp_pon_input_dispatch(struct qpnp_pon *pon, u32 pon_type)
 		elapsed_us = ktime_us_delta(ktime_get(),
 				pon->kpdpwr_last_release_time);
 		if (elapsed_us < pon->dbc_time_us) {
-			pr_debug("Ignoring kpdpwr event; within debounce time\n");
+			pr_err("Ignoring kpdpwr event; within debounce time\n");
 			return 0;
 		}
 	}
@@ -1039,7 +1039,7 @@ static int qpnp_pon_input_dispatch(struct qpnp_pon *pon, u32 pon_type)
 		return -EINVAL;
 	}
 
-	pr_debug("PMIC input: code=%d, status=0x%02X\n", cfg->key_code,
+	pr_err("PMIC input: code=%d, status=0x%02X\n", cfg->key_code,
 		pon_rt_sts);
 	key_status = pon_rt_sts & pon_rt_bit;
 
