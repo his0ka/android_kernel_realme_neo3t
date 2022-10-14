@@ -204,11 +204,6 @@ static void delayed_put_task_struct(struct rcu_head *rhp)
 	put_task_struct(tsk);
 }
 
-void put_task_struct_rcu_user(struct task_struct *task)
-{
-	if (refcount_dec_and_test(&task->rcu_users))
-		call_rcu(&task->rcu, delayed_put_task_struct);
-}
 
 void release_task(struct task_struct *p)
 {
@@ -249,7 +244,7 @@ repeat:
 
 	write_unlock_irq(&tasklist_lock);
 	release_thread(p);
-	put_task_struct_rcu_user(p);
+	call_rcu(&p->rcu, delayed_put_task_struct);
 
 	p = leader;
 	if (unlikely(zap_leader))
@@ -817,14 +812,12 @@ void __noreturn do_exit(long code)
     }
 //#endif /*OPLUS_BUG_STABILITY*/
 
-	profile_task_exit(tsk);
-	kcov_task_exit(tsk);
 	/*
-	 * We can get here from a kernel oops, sometimes with preemption off.
-	 * Start by checking for critical errors.
-	 * Then fix up important state like USER_DS and preemption.
-	 * Then do everything else.
-	 */
+		 * We can get here from a kernel oops, sometimes with preemption off.
+		 * Start by checking for critical errors.
+		 * Then fix up important state like USER_DS and preemption.
+		 * Then do everything else.
+		 */
 
 	WARN_ON(blk_needs_flush_plug(tsk));
 
@@ -890,9 +883,6 @@ void __noreturn do_exit(long code)
 	raw_spin_lock_irq(&tsk->pi_lock);
 	raw_spin_unlock_irq(&tsk->pi_lock);
 
-#ifdef CONFIG_OPLUS_FEATURE_UID_PERF
-	uid_check_out_pevent(tsk);
-#endif
 
 	/* sync mm's RSS info before statistics gathering */
 	if (tsk->mm)

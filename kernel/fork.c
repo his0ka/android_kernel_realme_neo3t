@@ -917,12 +917,10 @@ static struct task_struct *dup_task_struct(struct task_struct *orig, int node)
 #endif
 
 	/*
-	 * One for the user space visible state that goes away when reaped.
-	 * One for the scheduler.
+	 * One for us, one for whoever does the "release_task()" (usually
+	 * parent)
 	 */
-	refcount_set(&tsk->rcu_users, 2);
-	/* One for the rcu users */
-	atomic_set(&tsk->usage, 1);
+	atomic_set(&tsk->usage, 2);
 #ifdef CONFIG_BLK_DEV_IO_TRACE
 	tsk->btrace_seq = 0;
 #endif
@@ -2344,10 +2342,6 @@ static __latent_entropy struct task_struct *copy_process(
 #endif
 	}
 
-#ifdef CONFIG_OPLUS_FEATURE_UID_PERF
-	if (!IS_ERR(p))
-		uid_perf_work_add(p, false);
-#endif
 	return p;
 
 bad_fork_cancel_cgroup:

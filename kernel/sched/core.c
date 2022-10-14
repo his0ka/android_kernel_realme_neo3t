@@ -3312,6 +3312,8 @@ static inline void finish_task(struct task_struct *prev)
 #endif
 }
 
+
+
 static inline void
 prepare_lock_switch(struct rq *rq, struct task_struct *next, struct rq_flags *rf)
 {
@@ -3466,12 +3468,18 @@ static struct rq *finish_task_switch(struct task_struct *prev)
 		 * Remove function-return probe instances associated with this
 		 * task and put them back on the free list.
 		 */
-		kprobe_flush_task(prev);
+		/*kprobe_flush_task(prev);*/
 
 		/* Task is done with its stack. */
+		/*
 		put_task_stack(prev);
 
-		put_task_struct_rcu_user(prev);
+		put_task_struct_rcu_user(prev);*/
+
+		kprobe_flush_task(prev);
+		put_task_stack(prev);
+
+		put_task_struct(prev);
 	}
 
 	tick_nohz_task_switch();
