@@ -18,8 +18,7 @@
  * @lock: Spinlock to protect this timeline
  * @last_timestamp: Last timestamp when signaling fences
  * @device: kgsl device
- * @context_id: kgsl context id
- * @detached: whether the context is detached
+ * @context: kgsl context
  */
 struct kgsl_sync_timeline {
 	struct kref kref;
@@ -32,8 +31,7 @@ struct kgsl_sync_timeline {
 	spinlock_t lock;
 	unsigned int last_timestamp;
 	struct kgsl_device *device;
-	unsigned int context_id;
-	bool detached;
+	struct kgsl_context *context;
 };
 
 /**
