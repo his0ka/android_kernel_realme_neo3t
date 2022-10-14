@@ -594,6 +594,7 @@ static ssize_t writeback_store(struct device *dev,
 	struct bio bio;
 	struct bio_vec bio_vec;
 	struct page *page;
+	//int blk_idx;
 	ssize_t ret, sz;
 	char mode_buf[8];
 	int mode = -1;
