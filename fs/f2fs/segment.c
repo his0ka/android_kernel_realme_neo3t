@@ -2081,6 +2081,26 @@ static int issue_discard_thread(void *data)
 		}
 #endif
 
+		if (sbi->gc_mode == GC_URGENT)
+#ifdef CONFIG_OPLUS_FEATURE_OF2FS
+		{
+			/*
+			 * 2020-1-14, add for oDiscard decoupling
+			 */
+			if (sbi->dc_opt_enable)
+				dpolicy_curr = DPOLICY_FORCE;
+#endif
+			__init_discard_policy(sbi, &dpolicy, DPOLICY_FORCE, 1);
+#ifdef CONFIG_OPLUS_FEATURE_OF2FS
+                } else {
+			/*
+			 * 2020-1-14, add for oDiscard decoupling
+			 */
+			check_dpolicy_expect(sbi, &dpolicy_curr);
+			__init_discard_policy(sbi, &dpolicy, dpolicy_curr,
+					      dcc->discard_granularity);
+		}
+#endif
 		sb_start_intwrite(sbi->sb);
 
 		issued = __issue_discard_cmd(sbi, &dpolicy);
