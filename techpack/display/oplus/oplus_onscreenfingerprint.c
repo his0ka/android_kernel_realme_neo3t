@@ -813,6 +813,7 @@ int sde_plane_check_fingerprint_layer(const struct drm_plane_state *drm_state)
 int oplus_display_panel_get_dimlayer_hbm(void *data)
 {
 	uint32_t *dimlayer_hbm = data;
+	oplus_dimlayer_hbm = 1;
 
 	(*dimlayer_hbm) = oplus_dimlayer_hbm;
 
@@ -825,6 +826,7 @@ int oplus_display_panel_set_dimlayer_hbm(void *data)
 	struct drm_connector *dsi_connector = display->drm_conn;
 	uint32_t *dimlayer_hbm = data;
 	int err = 0;
+	(*dimlayer_hbm) = 1;
 	int value = (*dimlayer_hbm);
 
 	value = !!value;
