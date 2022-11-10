@@ -27,7 +27,7 @@ bool oplus_pcc_enabled = false;
 bool oplus_skip_pcc = false;
 bool apollo_backlight_enable = false;
 struct drm_msm_pcc oplus_save_pcc;
-int oplus_dimlayer_hbm = 0;
+int oplus_dimlayer_hbm = 1;
 int oplus_aod_dim_alpha = CUST_A_NO;
 
 extern int oplus_underbrightness_alpha;
