@@ -1690,12 +1690,10 @@ static ssize_t oplus_display_set_dimlayer_hbm(struct device *dev,
 	struct dsi_display *display = get_main_display();
 	struct drm_connector *dsi_connector = display->drm_conn;
 	int err = 0;
-	int value = 0;
+	int value = 1;
 
 	sscanf(buf, "%d", &value);
 	value = !!value;
-	if (oplus_dimlayer_hbm == value)
-		return count;
 	if (!dsi_connector || !dsi_connector->state || !dsi_connector->state->crtc) {
 		pr_err("[%s]: display not ready\n", __func__);
 	} else {
