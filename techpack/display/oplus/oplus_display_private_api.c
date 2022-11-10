@@ -1678,6 +1678,7 @@ static ssize_t oplus_display_set_dimlayer_enable(struct device *dev,
 static ssize_t oplus_display_get_dimlayer_hbm(struct device *dev,
                                 struct device_attribute *attr, char *buf)
 {
+	oplus_dimlayer_hbm = 1;
 	return sprintf(buf, "%d\n", oplus_dimlayer_hbm);
 }
 
