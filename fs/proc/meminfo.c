@@ -168,9 +168,6 @@ static int meminfo_proc_show(struct seq_file *m, void *v)
 	show_val_kb(m, "IonTotalUsed:   ", ion_total() >> PAGE_SHIFT);
 #endif
 #endif /* OPLUS_FEATURE_HEALTHINFO */
-#ifdef OPLUS_FEATURE_HEALTHINFO
-	show_val_kb(m, "GPUTotalUsed:   ", gpu_total() >> PAGE_SHIFT);
-#endif /* OPLUS_FEATURE_HEALTHINFO */
 	hugetlb_report_meminfo(m);
 
 	arch_report_meminfo(m);
